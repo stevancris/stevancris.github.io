@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cristian Stevanus Oloan — Site Reliability Engineer</title>
+  <meta name="description"
+    content="Site Reliability Engineer specializing in infrastructure automation and AI-powered developer tooling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0b0d;
+      --bg-1: #111316;
+      --bg-2: #181b1f;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-2: rgba(255, 255, 255, 0.11);
+      --text-1: #eeecea;
+      --text-2: #888c94;
+      --text-3: #494d55;
+      --accent: #5b9cf6;
+      --accent-glow: rgba(91, 156, 246, 0.15);
+      --accent-border: rgba(91, 156, 246, 0.28);
+      --green: #41d89a;
+      --amber: #f0a040;
+      --ff-head: 'Syne', sans-serif;
+      --ff-body: 'Lora', serif;
+      --ff-mono: 'DM Mono', monospace;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--ff-body);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb {
+      position: fixed;
+      top: -200px;
+      right: -150px;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(91, 156, 246, 0.06) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 3rem);
+      background: rgba(10, 11, 13, 0.8);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--ff-mono);
+      font-size: 13px;
+      color: var(--text-1);
+      text-decoration: none;
+    }
+
+    .nav-brand b {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-1);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+    }
+
+    .hero {
+      padding: 130px 0 80px;
+      opacity: 0;
+      animation: rise 0.7s 0.1s ease forwards;
+    }
+
+    .hero-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--green);
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.4px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: blink 2.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.35
+      }
+    }
+
+    .hero h1 {
+      font-family: var(--ff-head);
+      font-size: clamp(38px, 6.5vw, 58px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      color: var(--text-1);
+    }
+
+    .hero h1 .ital {
+      color: var(--accent);
+      font-style: italic;
+      font-family: var(--ff-body);
+      font-weight: 400;
+    }
+
+    .hero-bio {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-fill {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-fill:hover {
+      background: #7ab0f8;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-2);
+      border: 1px solid var(--border-2);
+    }
+
+    .btn-outline:hover {
+      color: var(--text-1);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--bg-2);
+    }
+
+    .section {
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: rise 0.6s ease forwards;
+    }
+
+    .section:nth-of-type(1) {
+      animation-delay: 0.2s
+    }
+
+    .section:nth-of-type(2) {
+      animation-delay: 0.28s
+    }
+
+    .section:nth-of-type(3) {
+      animation-delay: 0.36s
+    }
+
+    .section:nth-of-type(4) {
+      animation-delay: 0.44s
+    }
+
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .section-label {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .card:hover {
+      border-color: var(--border-2);
+      background: var(--bg-2);
+      transform: translateY(-1px);
+    }
+
+    .card.featured {
+      border-color: var(--accent-border);
+      background: linear-gradient(140deg, var(--bg-1) 55%, rgba(91, 156, 246, 0.04));
+    }
+
+    .card.featured:hover {
+      border-color: rgba(91, 156, 246, 0.45);
+    }
+
+    .card.wip {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .card-name {
+      font-family: var(--ff-head);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+
+    .card-sub {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .pill {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .pill-blue {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    .pill-amber {
+      background: rgba(240, 160, 64, 0.1);
+      color: var(--amber);
+      border: 1px solid rgba(240, 160, 64, 0.25);
+    }
+
+    .pill-green {
+      background: rgba(65, 216, 154, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(65, 216, 154, 0.25);
+    }
+
+    .card-body {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.875rem 1rem;
+    }
+
+    .metric-num {
+      font-family: var(--ff-mono);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .metric-desc {
+      font-family: var(--ff-head);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-3);
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--text-2);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .post {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      gap: 1rem;
+      transition: all 0.15s;
+    }
+
+    .post:last-child {
+      border-bottom: none;
+    }
+
+    .post:hover .post-title {
+      color: var(--accent);
+    }
+
+    .post:hover .post-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    .post-title {
+      font-family: var(--ff-head);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      margin-bottom: 3px;
+      transition: color 0.15s;
+    }
+
+    .post-meta {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .post-arrow {
+      color: var(--text-3);
+      font-size: 18px;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .about-text {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+      max-width: 600px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-box {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .info-key {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      color: var(--text-3);
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .info-val {
+      font-family: var(--ff-head);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+
+    .info-val.open {
+      color: var(--green);
+    }
+
+    .connect-intro {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 1.75rem;
+      line-height: 1.8;
+    }
+
+    .connect-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 2rem) clamp(1.25rem, 5vw, 2.5rem);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: var(--ff-mono);
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .footer-right {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .footer-right a {
+      color: var(--text-3);
+      text-decoration: none;
+      margin-left: 1.25rem;
+      transition: color 0.15s;
+    }
+
+    .footer-right a:hover {
+      color: var(--text-2);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @media(max-width:580px) {
+      .nav-links {
+        gap: 1.25rem
+      }
+
+      .hero {
+        padding: 100px 0 60px
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr
+      }
+
+      footer {
+        flex-direction: column;
+        gap: .75rem;
+        text-align: center
+      }
+
+      .footer-right a:first-child {
+        margin-left: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow-orb"></div>
+
+  <nav>
+    <a class="nav-brand" href="#">cristian<b>.</b>dev</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#writing">Writing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#connect">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-status"><span class="status-dot"></span>Available for new opportunities</div>
+      <h1>SRE who builds<br>systems that stay <span class="ital">reliable.</span></h1>
+      <p class="hero-bio">Hi, I'm Cristian Stevanus Oloan — a Site Reliability Engineer focused on infrastructure
+        automation, CI/CD pipelines, and integrating AI into developer workflows to make engineering teams ship faster
+        and safer.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-fill">View my work →</a>
+        <a href="#connect" class="btn btn-outline">Get in touch</a>
+      </div>
+    </div>
+
+    <section class="section" id="projects">
+      <div class="section-eyebrow"><span class="section-label">Projects</span>
+        <div class="section-rule"></div>
+      </div>
+      <div id="projects-container"></div>
+    </section>
+
+    <section class="section" id="writing">
+      <div class="section-eyebrow"><span class="section-label">Writing</span>
+        <div class="section-rule"></div>
+      </div>
+      <div id="writing-container"></div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-eyebrow"><span class="section-label">About</span>
+        <div class="section-rule"></div>
+      </div>
+      <p class="about-text">I'm an SRE with a passion for turning operational pain into automated solutions. I enjoy
+        sitting at the intersection of infrastructure and AI — taking the repetitive, error-prone parts of the
+        engineering workflow and making them disappear. When I'm not on-call, I'm usually building tools that make my
+        team's life easier.</p>
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-key">// role</div>
+          <div class="info-val">Site Reliability Engineer</div>
+        </div>
+        <div class="info-box">
+          <div class="info-key">// location</div>
+          <div class="info-val">Indonesia 🇮🇩</div>
+        </div>
+        <div class="info-box">
+          <div class="info-key">// focus areas</div>
+          <div class="info-val">CI/CD · Infra Automation · AI Tooling</div>
+        </div>
+        <div class="info-box">
+          <div class="info-key">// status</div>
+          <div class="info-val open">Open to opportunities</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connect">
+      <div class="section-eyebrow"><span class="section-label">Connect</span>
+        <div class="section-rule"></div>
+      </div>
+      <p class="connect-intro">Looking to hire, collaborate, or just chat about SRE & AI tooling? I'd love to hear from
+        you.</p>
+      <div class="connect-links" id="connect-links"></div>
+    </section>
+  </div>
+
+  <footer>
+    <span class="footer-name">Cristian Stevanus Oloan</span>
+    <div class="footer-right" id="footer-links"></div>
+  </footer>
+
+  <script>
+    // ================================================================
+    // ✏️  EDIT HANYA DI BAGIAN INI — tidak perlu sentuh bagian lainnya
+    // ================================================================
+
+    const PROFILE = {
+      name: "Cristian Stevanus Oloan",
+      github: "https://github.com/stevancris",
+      linkedin: "https://www.linkedin.com/in/cristian-stevanus-oloan/",
+      email: "cristianstevanus09@gmail.com",
+    };
+
+    // ──────────────────────────────────────────────────────────────
+    // PROJECTS — cara tambah project baru:
+    //   1. Copy blok objek { ... } di bawah
+    //   2. Paste setelah koma objek terakhir (sebelum ] penutup)
+    //   3. Isi data → simpan → done!
+    //
+    //  Field:
+    //   title    : nama project (wajib)
+    //   year     : tahun (wajib)
+    //   meta     : platform · bahasa · tools singkat (wajib)
+    //   desc     : deskripsi 2-3 kalimat (wajib)
+    //   stack    : array string teknologi (wajib)
+    //   metrics  : array {val, label} — maks 3, hapus field ini kalau belum ada data
+    //   link     : URL repo atau demo — pakai "#" kalau belum ada
+    //   featured : true = card biru highlight (gunakan untuk 1 project terbaik saja)
+    //   wip      : true = card redup non-clickable (untuk project belum selesai)
+    // ──────────────────────────────────────────────────────────────
+    const PROJECTS = [
+      {
+        title: "AI MR Review",
+        year: "2025",
+        meta: "gitlab · python · claude ai",
+        desc: "Automated merge request review system powered by Claude AI, integrated directly into GitLab CI/CD pipelines via kiro-cli. The bot analyses every incoming MR — surfacing potential bugs, flagging anti-patterns, and suggesting code improvements before a human reviewer even opens the diff.",
+        stack: ["Python", "Claude AI", "kiro-cli", "GitLab CI/CD", "Webhooks"],
+        metrics: [
+          { val: "~40%", label: "Faster review cycle" },
+          { val: "100%", label: "MR coverage" },
+          { val: "0", label: "Manual setup / MR" },
+        ],
+        link: "#",
+        // featured: true,
+        wip: true,
+      },
+
+      // ── Contoh project kedua — hapus komentar & isi datamu ────────
+      // {
+      //   title:   "Nama Project Baru",
+      //   year:    "2025",
+      //   meta:    "platform · bahasa · tools",
+      //   desc:    "Deskripsi singkat apa yang kamu bangun dan dampaknya buat tim.",
+      //   stack:   ["Tool1", "Tool2", "Tool3"],
+      //   metrics: [
+      //     { val: "X%", label: "Label metrik 1" },
+      //     { val: "Yx", label: "Label metrik 2" },
+      //   ],
+      //   link:     "https://github.com/stevancris/nama-repo",
+      //   featured: false,
+      // },
+    ];
+
+    // ──────────────────────────────────────────────────────────────
+    // WRITING — cara tambah artikel baru:
+    //   1. Copy blok { ... } di bawah
+    //   2. Paste DI ATAS objek yang sudah ada (artikel terbaru = paling atas)
+    //   3. Isi data → simpan → done!
+    // ──────────────────────────────────────────────────────────────
+    const POSTS = [
+      {
+        title: "How I built AI-powered MR reviews on GitLab with Claude",
+        meta: "Deep dive · 8 min read · 2025",
+        link: "#",  // ← ganti dengan URL artikel ketika sudah publish
+      },
+
+      // ── Contoh artikel baru — hapus komentar & isi datamu ────────
+      // {
+      //   title: "Judul artikel kamu",
+      //   meta:  "X min read · 2025",
+      //   link:  "https://medium.com/@stevancris/judul-artikel",
+      // },
+    ];
+
+    // ================================================================
+    // Render engine — tidak perlu diedit
+    // ================================================================
+
+    function badge(p) {
+      if (p.featured) return '<span class="pill pill-blue">Latest</span>';
+      if (p.wip) return '<span class="pill pill-amber">WIP</span>';
+      return '<span class="pill pill-green">Live</span>';
+    }
+
+    function renderProjects() {
+      let html = '';
+      PROJECTS.forEach(p => {
+        const cls = ['card', p.featured && 'featured', p.wip && 'wip'].filter(Boolean).join(' ');
+        const metaStr = [p.meta, p.year].filter(Boolean).join(' · ');
+        const metrics = p.metrics?.length ? `<div class="metrics">${p.metrics.map(m => `<div class="metric"><div class="metric-num">${m.val}</div><div class="metric-desc">${m.label}</div></div>`).join('')
+          }</div>` : '';
+        const chips = p.stack ? `<div class="chips">${p.stack.map(s => `<span class="chip">${s}</span>`).join('')}</div>` : '';
+        html += `<a href="${p.link || '#'}" class="${cls}" ${p.link && p.link !== '#' ? 'target="_blank"' : ''}>
+        <div class="card-header"><div><div class="card-name">${p.title}</div><div class="card-sub">${metaStr}</div></div>${badge(p)}</div>
+        <p class="card-body">${p.desc}</p>${metrics}${chips}</a>`;
+      });
+      // Tampilkan placeholder WIP jika project aktif masih sedikit
+      if (PROJECTS.filter(p => !p.wip).length < 3) {
+        html += `<a href="#" class="card wip">
+        <div class="card-header"><div><div class="card-name">Next project</div><div class="card-sub">in progress</div></div><span class="pill pill-amber">WIP</span></div>
+        <p class="card-body" style="margin-bottom:0">More infrastructure & reliability projects will appear here as they ship.</p></a>`;
+      }
+      document.getElementById('projects-container').innerHTML = html;
+    }
+
+    function renderWriting() {
+      let html = POSTS.map(p =>
+        `<a href="${p.link}" class="post" ${p.link !== '#' ? 'target="_blank"' : ''}>
+        <div><div class="post-title">${p.title}</div><div class="post-meta">${p.meta}</div></div>
+        <span class="post-arrow">↗</span></a>`
+      ).join('');
+      if (POSTS.length < 3) html += `<div class="post" style="opacity:.3;pointer-events:none"><div><div class="post-title">More articles coming soon…</div><div class="post-meta">Stay tuned</div></div></div>`;
+      document.getElementById('writing-container').innerHTML = html;
+    }
+
+    function renderConnect() {
+      document.getElementById('connect-links').innerHTML = [
+        `<a href="${PROFILE.github}"   class="btn btn-outline" target="_blank">GitHub ↗</a>`,
+        `<a href="${PROFILE.linkedin}" class="btn btn-outline" target="_blank">LinkedIn ↗</a>`,
+        `<a href="mailto:${PROFILE.email}" class="btn btn-fill">Say hello →</a>`,
+      ].join('');
+    }
+
+    function renderFooter() {
+      document.getElementById('footer-links').innerHTML =
+        `<a href="${PROFILE.github}" target="_blank">GitHub</a>
+       <a href="${PROFILE.linkedin}" target="_blank">LinkedIn</a>
+       <a href="mailto:${PROFILE.email}">Email</a>`;
+    }
+
+    renderProjects();
+    renderWriting();
+    renderConnect();
+    renderFooter();
+  </script>
+</body>
+
+</html>
